@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import registerMiddlewares from "./middlewares";
 
 declare global {
   namespace NodeJS {
@@ -16,5 +17,7 @@ if (!global.prisma) {
   });
 }
 prisma = global.prisma;
+
+registerMiddlewares(prisma);
 
 export default prisma;

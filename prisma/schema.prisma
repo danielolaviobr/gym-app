@@ -30,9 +30,8 @@ model User {
 
 model Token {
   id        String   @id @default(cuid())
-  token     String   @default(uuid())
+  token     String   @db.LongText
   createdAt DateTime @default(now()) @map("created_at")
-  expiresAt DateTime @default(now()) @map("expires_at")
   user      User     @relation(fields: [userId], references: [id])
   userId    String
 }
