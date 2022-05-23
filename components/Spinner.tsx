@@ -2,7 +2,7 @@ export default function Spinner({ className = "" }) {
   return (
     <div className="flex justify-center">
       <svg
-        className={`${className} text-zinc-900`}
+        className={`${className}`}
         viewBox="0 0 2400 2400"
         width={18}
         height={18}>

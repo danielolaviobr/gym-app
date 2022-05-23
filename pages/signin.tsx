@@ -1,10 +1,37 @@
+import Spinner from "@/components/Spinner";
+import api from "@/utils/api";
 import Link from "next/link";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
+
+interface SignInForm {
+  email: { value: string };
+  password: { value: string };
+  rememberMe: { value: string };
+}
 
 export default function SignIn() {
-  function handleSubmit(event: FormEvent) {
+  let [loading, setLoading] = useState(false);
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log(event.target);
+    let {
+      email: { value: email },
+      password: { value: password },
+      rememberMe: { value: rememberMe },
+    } = event.target as unknown as SignInForm;
+    try {
+      setLoading(true);
+      let result = await api.post("/auth/signin", {
+        email,
+        password,
+        rememberMe,
+      });
+      console.log(result.data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -29,12 +56,7 @@ export default function SignIn() {
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 sm:rounded-lg sm:px-10">
-            <form
-              className="space-y-6"
-              action="/api/auth/signin"
-              method="POST"
-              // onSubmit={handleSubmit}
-            >
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label
                   htmlFor="email"
@@ -98,8 +120,9 @@ export default function SignIn() {
               <div>
                 <button
                   type="submit"
+                  disabled={loading}
                   className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                  Entrar
+                  {loading ? <Spinner className="text-blue-100" /> : "Entrar"}
                 </button>
               </div>
             </form>

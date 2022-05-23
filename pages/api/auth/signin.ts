@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import prisma from "utils/prisma";
 import { getJWT } from "utils/jwt";
 import AuthError from "errors/AuthError";
+import { setCookie } from "nookies";
 
 type Data =
   | {
@@ -23,6 +24,9 @@ export default async function handler(
       password,
       rememberMe: !!rememberMe,
     });
+
+    // setCookie({ res }, "gym-app:auth", token);
+    res.setHeader("set-cookie", [`gym-app:auth=${token}`]);
 
     return res.status(200).json({
       user: {
@@ -55,14 +59,14 @@ export async function signIn({
       provider: "EMAIL",
     },
   });
-
+  console.log({ user });
   if (!user) {
     throw new AuthError("Invalid email or password");
   }
 
   let { password: removePassword, ...userWithoutPassword } = user;
 
-  let token = getJWT(userWithoutPassword, !rememberMe);
+  let token = getJWT(userWithoutPassword, rememberMe);
 
   await prisma.token.create({ data: { token, userId: user.id } });
 

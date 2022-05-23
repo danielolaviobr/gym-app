@@ -22,6 +22,7 @@ model User {
   name      String
   provider  Provider
   tokens    Token[]
+  photoUrl  String?  @map("photo_url")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
