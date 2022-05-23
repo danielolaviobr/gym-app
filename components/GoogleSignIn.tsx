@@ -1,4 +1,4 @@
-import { signInWithGoogle } from "@/firebase";
+import { signInWithGoogle } from "@/libs/firebase/auth";
 import { useState } from "react";
 import Spinner from "@/components/Spinner";
 import api from "@/utils/api";
