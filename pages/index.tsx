@@ -18,7 +18,7 @@ const Home: NextPage = () => {
 
       <div className="h-screen flex flex-col justify-between py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <h1 className="text-center text-5xl leading-relaxed font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-700 via-purple-500 to-sky-500 animate-text duration-[5s]">
+          <h1 className="text-center text-5xl leading-relaxed font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-700 via-sky-500 to-blue-700 animate-text">
             Gym App
           </h1>
           <h2 className="mt-2 text-center text-xl font-extrabold text-gray-400">
