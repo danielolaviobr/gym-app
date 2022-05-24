@@ -1,8 +1,9 @@
+import Button from "@/components/Button";
 import GoogleSignIn from "components/GoogleSignIn";
 import Spinner from "components/Spinner";
 import Link from "next/link";
 import { FormEvent, useState } from "react";
-import api from "utils/api";
+import { signup } from "@/libs/firebase/auth";
 
 interface SignUpForm {
   name: { value: string };
@@ -22,8 +23,7 @@ export default function SignIn() {
     } = event.target as unknown as SignUpForm;
     try {
       setLoading(true);
-      let result = await api.post("/auth/signup", { name, email, password });
-      console.log(result.data);
+      await signup(name, email, password);
     } catch (err) {
       console.log(err);
     } finally {
@@ -108,16 +108,13 @@ export default function SignIn() {
                 </div>
               </div>
               <div>
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                <Button type="submit" disabled={loading} variant="primary">
                   {loading ? (
                     <Spinner className="text-blue-100" />
                   ) : (
                     "Cadastrar me"
                   )}
-                </button>
+                </Button>
               </div>
             </form>
 

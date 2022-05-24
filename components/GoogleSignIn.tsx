@@ -9,8 +9,7 @@ export default function GoogleSignIn() {
     setLoading(true);
     try {
       let googleSignInData = await signInWithGoogle();
-      console.log(googleSignInData);
-      api.post("/auth/google", { ...googleSignInData });
+      console.log({ googleSignInData });
     } catch (err) {
     } finally {
       setLoading(false);
